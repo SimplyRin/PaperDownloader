@@ -89,8 +89,8 @@ public class Main {
 			}
 		}
 
-		System.out.println("現在のビルドバージョン: v" + currentBuild + " (MC " + currentVersion + ")");
-		System.out.println("最新のビルドバージョン: v" + latestBuild + " (MC " + latestVersion + ")");
+		System.out.println("現在のビルドバージョン: v" + currentBuild + " (MC: " + currentVersion + ")");
+		System.out.println("最新のビルドバージョン: v" + latestBuild + " (MC: " + latestVersion + ")");
 
 		if (currentBuild != latestBuild) {
 			System.out.println("最新のファイルをダウンロードしています...");
@@ -129,7 +129,7 @@ public class Main {
 				}
 			}
 		} else {
-			System.out.println("最新のビルドを使用しています。v" + currentBuild + " (MC " + currentVersion + ")");
+			System.out.println("最新のビルドを使用しています。v" + currentBuild + " (MC: " + currentVersion + ")");
 		}
 	}
 
