@@ -56,7 +56,7 @@ public class Main {
 		File file = new File("paperdownloader.json");
 		if (!file.exists()) {
 			JsonObject jsonObject = new JsonObject();
-			jsonObject.addProperty("Paper-Version", "1.16");
+			jsonObject.addProperty("Paper-Version", "1.19.2");
 			jsonObject.addProperty("Save-As", "paperclip.jar");
 			jsonObject.addProperty("Current-Build", 0);
 			jsonObject.addProperty("Current-Version", "unknown");
@@ -72,21 +72,17 @@ public class Main {
 		String currentVersion = jsonObject.get("Current-Version").getAsString();
 
 		// Paper の最新バージョンを確認
-		String url = "https://papermc.io/api/v2/projects/paper/version_group/" + paperVersion + "/builds";
+		String url = "https://papermc.io/api/v2/projects/paper/versions/" + paperVersion + "/builds";
 		JsonObject builds = JsonParser.parseString(this.getUrl(url)).getAsJsonObject();
 
-		String latestVersion = "";
+		String latestVersion = builds.get("version").getAsString();
 		int latestBuild = 0;
 
 		JsonArray buildsArray = builds.get("builds").getAsJsonArray();
 		for (int i = 0; i < buildsArray.size(); i++) {
 			JsonObject build = buildsArray.get(i).getAsJsonObject();
 
-			int lB = latestBuild;
 			latestBuild = Math.max(latestBuild, build.get("build").getAsInt());
-			if (lB != latestBuild) {
-				latestVersion = build.get("version").getAsString();
-			}
 		}
 
 		System.out.println("現在のビルドバージョン: v" + currentBuild + " (MC: " + currentVersion + ")");
@@ -95,6 +91,7 @@ public class Main {
 		if (currentBuild != latestBuild) {
 			System.out.println("最新のファイルをダウンロードしています...");
 
+			// https://api.papermc.io/v2/projects/paper/versions/1.19.1/builds
 			String paperJarUrl = "https://papermc.io/api/v2/projects/paper/versions/" + latestVersion + "/builds/" + latestBuild
 					+ "/downloads/paper-" + latestVersion + "-" + latestBuild + ".jar";
 
